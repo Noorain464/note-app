@@ -30,7 +30,7 @@ export default function EditNote() {
 
     if (error) {
       alert(`Error fetching note: ${error.message}`);
-      router.push("/notes"); // Redirect back to the notes list if the note is not found
+      router.push("/notes/list"); // Redirect back to the notes list if the note is not found
     } else {
       setTitle(data.title);
       setContent(data.content);
@@ -56,18 +56,23 @@ export default function EditNote() {
       alert(`Error updating note: ${error.message}`);
     } else {
       alert("Note updated successfully!");
-      router.push("/notes"); // Redirect to the notes list page after updating
+      router.push("/notes/list"); // Redirect to the notes list page after updating
     }
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Edit Note</h1>
+    <div className="max-w-2xl mx-auto bg-card p-6 rounded-lg shadow-md">
+      <h1 className="text-3xl font-bold mb-6 text-center text-primary">
+        Edit Your Note
+      </h1>
+      <p className="text-center text-gray-400 mb-6 italic">
+        "Refine your thoughts, one edit at a time."
+      </p>
       {loading ? (
-        <p>Loading...</p>
+        <p className="text-center text-gray-400">Loading...</p>
       ) : (
         <>
-          <div className="mb-4">
+          <div className="mb-6">
             <label className="block text-sm font-medium mb-2" htmlFor="title">
               Title
             </label>
@@ -76,11 +81,11 @@ export default function EditNote() {
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="border p-2 w-full"
+              className="border p-3 w-full rounded bg-input text-foreground"
               placeholder="Enter note title"
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-6">
             <label className="block text-sm font-medium mb-2" htmlFor="content">
               Content
             </label>
@@ -88,14 +93,14 @@ export default function EditNote() {
               id="content"
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className="border p-2 w-full h-32"
+              className="border p-3 w-full rounded bg-input text-foreground h-40"
               placeholder="Enter note content"
             />
           </div>
           <button
             onClick={handleUpdateNote}
             disabled={loading}
-            className={`bg-blue-500 text-white px-4 py-2 rounded ${
+            className={`w-full bg-primary text-white py-3 rounded hover:bg-primary-hover ${
               loading ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >

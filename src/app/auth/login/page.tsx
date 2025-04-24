@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -26,43 +28,30 @@ export default function Login() {
       alert(`Error logging in: ${error.message}`);
     } else {
       alert("Login successful!");
-      router.push("/notes"); // Redirect to the notes list page after login
-    }
-  };
-
-  const handleGoogleLogin = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({ provider: "google" });
-    if (error) {
-      alert(`Error logging in with Google: ${error.message}`);
+      router.push("/notes/list");
     }
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Login</h1>
-      <input
+    <div className="max-w-md mx-auto bg-card p-6 rounded-lg shadow-md">
+      <h1 className="text-3xl font-bold mb-6 text-center text-primary">Welcome Back!</h1>
+      <Input
         type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="border p-2 mb-4 w-full"
+        className="mb-4"
       />
-      <input
+      <Input
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        className="border p-2 mb-4 w-full"
+        className="mb-4"
       />
-      <button
-        onClick={handleLogin}
-        disabled={loading}
-        className={`bg-blue-500 text-white px-4 py-2 rounded ${
-          loading ? "opacity-50 cursor-not-allowed" : ""
-        }`}
-      >
+      <Button onClick={handleLogin} disabled={loading} className="w-full">
         {loading ? "Logging in..." : "Login"}
-      </button>
+      </Button>
     </div>
   );
 }
